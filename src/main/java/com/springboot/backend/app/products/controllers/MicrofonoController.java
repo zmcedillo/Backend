@@ -1,8 +1,10 @@
 package com.springboot.backend.app.products.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,10 +24,16 @@ public class MicrofonoController {
 	@Autowired
 	private MicrofonoService microService;
 	//Definicion de endpoints
+	
+	@Value("${server.port}")
+	private Integer port;
+	
 	@GetMapping("/list")
 	public List<Microfono> list(){
-		
-		return microService.findAll();
+		return microService.findAll().stream().map(cel -> {
+			cel.setPort(port);
+			return cel;
+		}).collect(Collectors.toList());
 	}
 	
 	@GetMapping("/microfono/{id}")
