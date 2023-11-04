@@ -38,6 +38,10 @@ public class MicrofonoController {
 	
 	@GetMapping("/microfono/{id}")
 	public Microfono detail(@PathVariable Long id) {
+		
+		//boolean bl = false;
+		//if(!bl)
+		//	throw new RuntimeException("No se pudo obtener detalle del microfono");
 		return microService.findByID(id);
 	}
 	
